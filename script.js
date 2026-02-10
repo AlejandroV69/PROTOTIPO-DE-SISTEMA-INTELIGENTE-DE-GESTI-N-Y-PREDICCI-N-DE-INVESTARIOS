@@ -62,9 +62,18 @@ productForm.addEventListener("submit", (e) => {
   const id = document.getElementById("product-id").value;
   const name = document.getElementById("product-name").value;
   const category = document.getElementById("product-category").value;
-  const price = parseFloat(document.getElementById("product-price").value);
-  const stock = parseInt(document.getElementById("product-stock").value);
-  const minStock = parseInt(document.getElementById("product-min-stock").value);
+  const priceInput = document.getElementById("product-price").value;
+  const stockInput = document.getElementById("product-stock").value;
+  const minStockInput = document.getElementById("product-min-stock").value;
+
+  const price = priceInput ? parseFloat(priceInput) : 0;
+  const stock = stockInput ? parseInt(stockInput) : 0;
+  const minStock = minStockInput ? parseInt(minStockInput) : 0;
+
+  if (isNaN(price) || price < 0) {
+      alert("Por favor ingrese un precio válido.");
+      return;
+  }
 
   if (id) {
     // Edit existing

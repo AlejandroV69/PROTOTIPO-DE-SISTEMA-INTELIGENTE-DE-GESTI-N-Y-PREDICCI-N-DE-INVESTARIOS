@@ -380,8 +380,11 @@ tbody tr:hover {
 @media (max-width: 768px) {
   .app-container {
     flex-direction: column;
+    height: 100vh; /* Ensure full height */
+    overflow: hidden;
   }
 
+  /* Sidebar becomes TopBar/TabBar hybrid */
   .sidebar {
     width: 100%;
     height: auto;
@@ -389,28 +392,105 @@ tbody tr:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent shrinking */
+    z-index: 10;
+  }
+
+  .logo {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
+
+  .logo span {
+    display: inline-block; /* Keep logo text visible if space permits, or hide if very small */
   }
 
   .nav-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border-color);
     flex-direction: row;
-    gap: 1rem;
-    overflow-x: auto;
+    justify-content: space-around;
+    padding: 0.5rem;
+    z-index: 100;
+  }
+
+  .nav-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    border-radius: 0;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+  }
+
+  .nav-item i {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+  }
+
+  .nav-item.active {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-top: 2px solid var(--primary-color);
   }
 
   .nav-item span {
+    display: block; /* Show text labels in bottom nav */
+    font-size: 0.7rem;
+  }
+
+  .sidebar-footer {
     display: none;
   }
 
-  .sidebar-footer,
-  .logo span {
-    display: none;
+  .main-content {
+    padding: 1rem;
+    padding-bottom: 80px; /* Space for bottom nav */
+    overflow-y: auto;
+    height: 100%;
   }
 
   .charts-container {
     grid-template-columns: 1fr;
   }
 
-  .main-content {
-    padding: 1rem;
+  /* Responsive Table */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px; /* Ensure table doesn't squash columns */
+  }
+
+  /* Modal Adjustments */
+  .modal-content {
+    width: 95%;
+    margin: 20px;
+    padding: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .top-bar {
+    margin-bottom: 1.5rem;
+  }
+
+  h2#page-title {
+    font-size: 1.5rem;
   }
 }
