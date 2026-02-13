@@ -19,6 +19,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Outfit", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -30,7 +31,7 @@ body {
 /* Layout */
 .app-container {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
 }
 
 /* Sidebar */
@@ -417,6 +418,7 @@ tbody tr:hover {
     flex-direction: row;
     justify-content: space-around;
     padding: 0.5rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
     z-index: 100;
   }
 
