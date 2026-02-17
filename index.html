@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChocoInventory | Gestión Inteligente</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fa-solid fa-cube"></i>
+          <span>ChocoInventory</span>
+        </div>
+        <nav class="nav-menu">
+          <button class="nav-item active" data-target="dashboard">
+            <i class="fa-solid fa-chart-pie"></i> Dashboard
+          </button>
+          <button class="nav-item" data-target="inventory">
+            <i class="fa-solid fa-boxes-stacked"></i> Inventario
+          </button>
+          <button class="nav-item" data-target="movements">
+            <i class="fa-solid fa-right-left"></i> Movimientos
+          </button>
+          <button class="nav-item" data-target="reports">
+            <i class="fa-solid fa-chart-line"></i> Reportes & IA
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <p>Versión Prototipo 1.0</p>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <header class="top-bar">
+          <h2 id="page-title">Bienvenido</h2>
+          <div class="user-profile">
+            <span>Admin</span>
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+          </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="view active">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="icon-bg blue"><i class="fa-solid fa-box"></i></div>
+              <div class="kpi-info">
+                <h3>Total Productos</h3>
+                <p id="total-products">0</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="icon-bg green">
+                <i class="fa-solid fa-dollar-sign"></i>
+              </div>
+              <div class="kpi-info">
+                <h3>Valor Inventario</h3>
+                <p id="inventory-value">$0.00</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="icon-bg red">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <div class="kpi-info">
+                <h3>Stock Bajo</h3>
+                <p id="low-stock-count">0</p>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="icon-bg purple">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div class="kpi-info">
+                <h3>Predicciones</h3>
+                <p>Activas</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="charts-container">
+            <div class="chart-card">
+              <h3>Distribución de Stock</h3>
+              <canvas id="stockChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Movimientos Recientes</h3>
+              <ul id="recent-movements-list" class="recent-list">
+                <!-- JS populated -->
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Inventory Section -->
+        <section id="inventory" class="view">
+          <div class="section-header">
+            <h3>Gestión de Productos</h3>
+            <button class="btn-primary" onclick="openModal('productModal')">
+              <i class="fa-solid fa-plus"></i> Nuevo Producto
+            </button>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Stock</th>
+                  <th>Precio</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="products-table-body">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Movements Section -->
+        <section id="movements" class="view">
+          <div class="form-card">
+            <h3>Registrar Entrada / Salida</h3>
+            <form id="movement-form">
+              <div class="form-group">
+                <label>Producto</label>
+                <select id="movement-product" required>
+                  <!-- JS populated -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tipo de Movimiento</label>
+                <select id="movement-type" required>
+                  <option value="in">Entrada (Compra)</option>
+                  <option value="out">Salida (Venta)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Cantidad</label>
+                <input type="number" id="movement-quantity" min="1" required />
+              </div>
+              <button type="submit" class="btn-primary">
+                Registrar Movimiento
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Reports & IA Section -->
+        <section id="reports" class="view">
+          <div class="section-header">
+            <h3>Análisis Inteligente y Predicciones</h3>
+          </div>
+          <div class="charts-grid-2">
+            <div class="chart-card full-width">
+              <h3>Demanda Histórica vs Predicción</h3>
+              <canvas id="predictionChart"></canvas>
+            </div>
+          </div>
+          <div class="insights-container" id="ai-insights">
+            <!-- AI Insights will be injected here -->
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('productModal')">&times;</span>
+        <h3 id="modal-title">Agregar Producto</h3>
+        <form id="product-form">
+          <input type="hidden" id="product-id" />
+          <div class="form-group">
+            <label>Nombre del Producto</label>
+            <input type="text" id="product-name" required />
+          </div>
+          <div class="form-group">
+            <label>Categoría</label>
+            <input type="text" id="product-category" required />
+          </div>
+          <div class="form-group">
+            <label>Precio Unitario</label>
+            <input type="number" id="product-price" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label>Stock Inicial</label>
+            <input type="number" id="product-stock" required />
+          </div>
+          <div class="form-group">
+            <label>Stock Mínimo (Alerta)</label>
+            <input type="number" id="product-min-stock" required />
+          </div>
+          <button type="submit" class="btn-primary">Guardar</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
